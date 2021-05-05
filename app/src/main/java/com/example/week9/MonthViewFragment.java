@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,8 +25,8 @@ public class MonthViewFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private int mParam1;
+    private int mParam2;
 
     public MonthViewFragment() {
         // Required empty public constructor
@@ -40,11 +41,11 @@ public class MonthViewFragment extends Fragment {
      * @return A new instance of fragment MonthViewFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MonthViewFragment newInstance(String param1, String param2) {
-        MonthViewFragment fragment = new MonthViewFragment();
+    public static MonthCalendarFragment newInstance(int year, int month) {
+        MonthCalendarFragment fragment = new MonthCalendarFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(ARG_PARAM1, year);
+        args.putInt(ARG_PARAM2, month);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,8 +54,8 @@ public class MonthViewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam1 = getArguments().getInt(ARG_PARAM1);
+            mParam2 = getArguments().getInt(ARG_PARAM2);
         }
     }
 
@@ -65,16 +66,22 @@ public class MonthViewFragment extends Fragment {
         View rootview = inflater.inflate(R.layout.fragment_month_view, container, false);
 
         ViewPager2 vpPager = rootview.findViewById(R.id.vpPager);
-        FragmentStateAdapter adapter = new MonthCalendarAdapter(this);
+        FragmentStateAdapter adapter = new MonthCalendarAdapter(getActivity());
         vpPager.setAdapter(adapter);
-        vpPager.setCurrentItem(2);
+        int a = new MonthCalendarAdapter(getActivity()).current_year;
+        int b = new MonthCalendarAdapter(getActivity()).current_month;
 
         vpPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                Toast.makeText(getActivity(),
+                        "Selected page position: " + position, Toast.LENGTH_SHORT).show();
+                ((MonthViewActivity)getActivity()).getSupportActionBar().setTitle((a+(b+position)/12) + "년 " + ((b+position)%12+1) + "월");
+            }
+        });
 
-        }
+
 
         return rootview;
     }
 }
-
-// 이걸로 갈아끼움 메인화면임
