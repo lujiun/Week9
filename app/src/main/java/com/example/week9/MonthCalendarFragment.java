@@ -1,5 +1,7 @@
 package com.example.week9;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -89,11 +92,10 @@ public class MonthCalendarFragment extends Fragment {
                     Toast.makeText(getActivity(),
                             mParam1 + "." + (mParam2 + 1) + "." + (position - dayOfWeek + 1),
                             Toast.LENGTH_SHORT).show();
+//                    textView.setBackgroundColor(Color.parseColor("#FF0000"));
                 }
             }
         });
         return rootview;
     }
-
-
 }

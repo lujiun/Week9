@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/calendar"
     tools:context=".MonthCalendarFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -11,9 +12,9 @@
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="fill_vertical"
+        android:minHeight="500dp"
         android:gravity="center"
-        android:background="@android:color/darker_gray"
+        android:background="#8B00FF"
         android:listSelector="#00FFFF"
         android:numColumns="7"
         android:stretchMode="columnWidth"
