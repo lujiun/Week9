@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/calendar"
+    android:orientation="vertical"
     tools:context=".MonthCalendarFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -20,5 +21,15 @@
         android:stretchMode="columnWidth"
         android:horizontalSpacing="1dp"
         android:verticalSpacing="1dp"/>
+
+    <TextView
+        android:id="@+id/text12"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+        android:minHeight="112dp" />
 
 </LinearLayout>

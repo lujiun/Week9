@@ -78,7 +78,7 @@ public class MonthCalendarFragment extends Fragment {
         if (mParam2 == 3 || mParam2 == 5 || mParam2 == 8 || mParam2 == 10) days.addAll(day30); // 4,6,9,11월 - 30일
         if (mParam2 == 0 || mParam2 == 2 || mParam2 == 4 || mParam2 == 6 || mParam2 == 7 || mParam2 == 9 || mParam2 == 11) days.addAll(day31); // 1,3,5,7,8,10,12월 - 31일
 
-        for (int i = days.size(); i<42; i++) days.add("");
+        for (int i = days.size(); i<42; i++) days.add(""); // 마지막날 뒤의 격자에도 빈칸 넣어줌
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 R.layout.day,
