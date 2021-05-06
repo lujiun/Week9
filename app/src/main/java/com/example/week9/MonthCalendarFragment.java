@@ -21,7 +21,7 @@ import java.util.Calendar;
 public class MonthCalendarFragment extends Fragment {
     int max_day;
     int dayOfWeek;
-
+    TextView tt;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -55,7 +55,6 @@ public class MonthCalendarFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_month_calendar, container, false);
         GridView gridView = rootview.findViewById(R.id.gridview);
-
         Calendar cal = Calendar.getInstance();
 
         cal.set(mParam1, mParam2, 1);
@@ -75,11 +74,14 @@ public class MonthCalendarFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
+                if(tt!=null) tt.setBackgroundColor(Color.WHITE); //이전 선택값 흰색으로 돌리기
                 if(position>=dayOfWeek&&position<max_day+dayOfWeek) { // 1의 요일보다 앞에 있을 때에는 클릭에 반응하지 않음
                     Toast.makeText(getActivity(),
                             mParam1 + "." + (mParam2 + 1) + "." + (position - dayOfWeek + 1),
                             Toast.LENGTH_SHORT).show();
-//                    textView.setBackgroundColor(Color.parseColor("#FF0000"));
+                    TextView textView = v.findViewById(R.id.text1);
+                    textView.setBackgroundColor(Color.CYAN); //선택된 텍스트 뷰 색깔 변경
+                    tt = textView;
                 }
             }
         });
