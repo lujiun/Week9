@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MonthCalendarFragment extends Fragment {
-
+    int max_day;
     int dayOfWeek;
 
     private static final String ARG_PARAM1 = "param1";
@@ -56,29 +56,18 @@ public class MonthCalendarFragment extends Fragment {
         View rootview = inflater.inflate(R.layout.fragment_month_calendar, container, false);
         GridView gridView = rootview.findViewById(R.id.gridview);
 
-        ArrayList<String> days = new ArrayList<String>();
-        ArrayList<String> day28 = new ArrayList<String>();
-        ArrayList<String> day29 = new ArrayList<String>();
-        ArrayList<String> day30 = new ArrayList<String>();
-        ArrayList<String> day31 = new ArrayList<String>();
+
         Calendar cal = Calendar.getInstance();
 
         cal.set(mParam1, mParam2, 1);
+        max_day = cal.getActualMaximum(Calendar.DAY_OF_MONTH); //해당 월의 마지막 날 구하기
         dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-1; // 첫날 요일구하기, 0부터 시작하기 위해 1을 빼주었다.
+        String[] days = new String[42];
 
-        for (int i = 1; i <= 28; i++) day28.add("" + i);
-        for (int i = 1; i <= 29; i++) day29.add("" + i);
-        for (int i = 1; i <= 30; i++) day30.add("" + i);
-        for (int i = 1; i <= 31; i++) day31.add("" + i); // 각각의 배열에 28~31일만큼 숫자 할당해줌
-
-        for (int i = 0; i < dayOfWeek; i++) days.add(""); // 1일의 요일을 구해서 그 값만큼 격자 앞쪽에 빈칸 만들어줌
-
-        if (mParam2 == 1 && mParam1 % 4 != 0) days.addAll(day28); // 2월 - 28일
-        if (mParam2 == 1 && mParam1 % 4 == 0) days.addAll(day29); // 2월/윤달 - 29일
-        if (mParam2 == 3 || mParam2 == 5 || mParam2 == 8 || mParam2 == 10) days.addAll(day30); // 4,6,9,11월 - 30일
-        if (mParam2 == 0 || mParam2 == 2 || mParam2 == 4 || mParam2 == 6 || mParam2 == 7 || mParam2 == 9 || mParam2 == 11) days.addAll(day31); // 1,3,5,7,8,10,12월 - 31일
-
-        for (int i = days.size(); i<42; i++) days.add(""); // 마지막날 뒤의 격자에도 빈칸 넣어줌
+        for (int i = 0; i < days.length; i++) {
+            if(i<dayOfWeek||i>max_day+dayOfWeek-1) days[i]= "";
+            else days[i] = Integer.toString(i-dayOfWeek+1);
+        }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 R.layout.day,
@@ -88,7 +77,7 @@ public class MonthCalendarFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                if(position>=dayOfWeek) { // 1의 요일보다 앞에 있을 때에는 클릭에 반응하지 않음
+                if(position>=dayOfWeek&&position<max_day+dayOfWeek) { // 1의 요일보다 앞에 있을 때에는 클릭에 반응하지 않음
                     Toast.makeText(getActivity(),
                             mParam1 + "." + (mParam2 + 1) + "." + (position - dayOfWeek + 1),
                             Toast.LENGTH_SHORT).show();
