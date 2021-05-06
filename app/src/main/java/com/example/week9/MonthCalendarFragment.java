@@ -56,7 +56,6 @@ public class MonthCalendarFragment extends Fragment {
         View rootview = inflater.inflate(R.layout.fragment_month_calendar, container, false);
         GridView gridView = rootview.findViewById(R.id.gridview);
 
-
         Calendar cal = Calendar.getInstance();
 
         cal.set(mParam1, mParam2, 1);
@@ -73,7 +72,6 @@ public class MonthCalendarFragment extends Fragment {
                 R.layout.day,
                 days);
         gridView.setAdapter(adapter);
-
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
