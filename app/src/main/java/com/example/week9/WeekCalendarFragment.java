@@ -75,18 +75,26 @@ public class WeekCalendarFragment extends Fragment {
 
         cal.set(mParam1, mParam2, 1);
         max_day = cal.getActualMaximum(Calendar.DAY_OF_MONTH); //해당 월의 마지막 날 구하기
-        dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-1; // 첫날 요일구하기, 0부터 시작하기 위해 1을 빼주었다.
+        dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-1; // 첫날 요일구하기
         cur_week = mParam3;
-        String[] day_s = new String[]{"1","2","3","4","5","6","7"};
+
+        String[] day_s = new String[7];
         String[] time_s = new String[24];
         String[] timeB_s = new String[24*7];
+
+        for(int i=cur_week*7+1-dayOfWeek, count=0;count<7;i++,count++)
+        {//현재 주차*7 +1(그 다음 첫번째 날을 가기 위함)- 첫날 요일까지 빼기
+            if(i<1||i>max_day) day_s[count] = "";
+            else day_s[count] = i+"";
+        }
+
         for(int i=0;i<24;i++) time_s[i] = i+"";
         Arrays.fill(timeB_s,"");
 
 
         ArrayAdapter<String> Dadapter = new ArrayAdapter<>(
                 getActivity(),
-                android.R.layout.simple_list_item_1,
+                R.layout.weekday,
                 day_s);
         day.setAdapter(Dadapter);
 

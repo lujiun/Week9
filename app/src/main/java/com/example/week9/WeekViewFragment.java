@@ -76,6 +76,22 @@ public class WeekViewFragment extends Fragment {
         FragmentStateAdapter adapter = new WeekCalendarAdapter(getActivity());
         vpPager.setAdapter(adapter);
         vpPager.setCurrentItem(50);
+
+        /*TODO: 왜 이렇게 쓰는 지 확인*/
+        int year = new WeekCalendarAdapter(getActivity()).year;
+        int month = new WeekCalendarAdapter(getActivity()).month;
+        int week = new WeekCalendarAdapter(getActivity()).cur_week;
+
+        ((MonthViewActivity)getActivity()).getSupportActionBar().setTitle(year + "년 " + (month+1) + "월 " + (week+1) + "주차");
+
+        vpPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+
+            @Override
+            public void onPageSelected(int position) {
+                ((MonthViewActivity) getActivity()).getSupportActionBar().setTitle( (year+((month + 12+ (week+position+4)/6-9)/12)-1) +"년 " + ((month + 12+ (week+position+4)/6 -9 ) %12+1) +"월 " + ((week + position+4)%6+1) +"주차");
+
+            }
+        });
         return rootView;
     }
 }
