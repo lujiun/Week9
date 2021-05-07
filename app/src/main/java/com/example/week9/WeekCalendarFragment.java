@@ -1,5 +1,6 @@
 package com.example.week9;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +8,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -20,6 +24,8 @@ import java.util.Calendar;
  */
 public class WeekCalendarFragment extends Fragment {
     int max_day, dayOfWeek, cur_week;
+    TextView sel_timeB;
+    View sel_day;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -109,6 +115,23 @@ public class WeekCalendarFragment extends Fragment {
                 R.layout.timeb,
                 timeB_s);
         timeB.setAdapter(TBadapter);
+        sel_day = rootView.findViewById(R.id.day_text);
+        timeB.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getActivity(),"position = "+position, Toast.LENGTH_SHORT).show();
+                if(sel_timeB!=null) {
+                    sel_timeB.setBackgroundColor(Color.WHITE);
+                    sel_day.setBackgroundColor(Color.WHITE);
+                }
+                sel_timeB = view.findViewById(R.id.timeb_text);
+                sel_timeB.setBackgroundColor(Color.CYAN);
+                sel_day = day.getChildAt(position%7).findViewById(R.id.day_text);
+                sel_day.setBackgroundColor(Color.CYAN);
+
+
+            }
+        });
         // Inflate the layout for this fragment
         return rootView;
     }
