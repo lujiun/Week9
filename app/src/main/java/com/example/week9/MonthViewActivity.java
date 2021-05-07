@@ -23,13 +23,6 @@ public class MonthViewActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().add(R.id.main_container, new MonthViewFragment()).commit();
 
-        GridView day_of_the_week = findViewById(R.id.day_of_the_week);
-        final String[] dayOfTheWeek = new String[]{"일", "월", "화", "수", "목", "금", "토"};
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                R.layout.day_of_the_week,
-                dayOfTheWeek);
-        day_of_the_week.setAdapter(adapter);
     }
     //여기부터 앱바
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -42,12 +35,12 @@ public class MonthViewActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.month_view:
-                getSupportFragmentManager().beginTransaction().add(R.id.main_container, new MonthViewFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new MonthViewFragment()).commit();
                 Toast.makeText(getApplicationContext(), "month_view", Toast.LENGTH_SHORT).show();
                 return true;
 
             case R.id.week_view:
-                getSupportFragmentManager().beginTransaction().add(R.id.main_container, new WeekViewFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new WeekViewFragment()).commit();
                 Toast.makeText(getApplicationContext(), "week_view", Toast.LENGTH_SHORT).show();
                 return true;
             default:

@@ -60,6 +60,7 @@ public class MonthCalendarFragment extends Fragment {
         cal.set(mParam1, mParam2, 1);
         max_day = cal.getActualMaximum(Calendar.DAY_OF_MONTH); //해당 월의 마지막 날 구하기
         dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-1; // 첫날 요일구하기, 0부터 시작하기 위해 1을 빼주었다.
+
         String[] days = new String[42];
 
         for (int i = 0; i < days.length; i++) {
@@ -79,7 +80,7 @@ public class MonthCalendarFragment extends Fragment {
                     Toast.makeText(getActivity(),
                             mParam1 + "." + (mParam2 + 1) + "." + (position - dayOfWeek + 1),
                             Toast.LENGTH_SHORT).show();
-                    TextView textView = v.findViewById(R.id.text1);
+                    TextView textView = v.findViewById(R.id.day_text);
                     textView.setBackgroundColor(Color.CYAN); //선택된 텍스트 뷰 색깔 변경
                     tt = textView;
                 }

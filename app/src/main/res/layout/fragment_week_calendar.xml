@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WeekCalendarFragment"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="17"/>
+        <GridView
+            android:id="@+id/week_day"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:numColumns="7"
+            />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/Scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <com.example.week9.ExpandableHeightGridView
+                android:id="@+id/time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="17"
+                android:layout_gravity="right"
+                android:numColumns="1"
+                android:scrollbarAlwaysDrawVerticalTrack="false"
+                android:verticalSpacing="1dp" />
+            <com.example.week9.ExpandableHeightGridView
+                android:id="@+id/time_blank"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numColumns="7"
+                android:minWidth="10dp"
+                android:minHeight="20dp"
+                android:layout_weight="1"
+                android:background="#8B00FF"
+                android:horizontalSpacing="1dp"
+                android:verticalSpacing="1dp"
+                android:scrollbarAlwaysDrawVerticalTrack="false"
+                />
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+</LinearLayout>

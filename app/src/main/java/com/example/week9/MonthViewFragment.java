@@ -9,6 +9,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
 
 public class MonthViewFragment extends Fragment {
 
@@ -46,7 +48,14 @@ public class MonthViewFragment extends Fragment {
 
         View rootview = inflater.inflate(R.layout.fragment_month_view, container, false);
 
-        ViewPager2 vpPager = rootview.findViewById(R.id.vpPager);
+        GridView day_of_the_week = rootview.findViewById(R.id.day_of_the_week1);
+        final String[] dayOfTheWeek = new String[]{"일", "월", "화", "수", "목", "금", "토"};
+        ArrayAdapter<String> DOWadapter = new ArrayAdapter<>(getActivity(),
+                R.layout.day_of_the_week,
+                dayOfTheWeek);
+        day_of_the_week.setAdapter(DOWadapter);
+
+        ViewPager2 vpPager = rootview.findViewById(R.id.month_vp);
         FragmentStateAdapter adapter = new MonthCalendarAdapter(getActivity());
         vpPager.setAdapter(adapter);
         int a = new MonthCalendarAdapter(getActivity()).year;

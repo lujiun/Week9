@@ -5,8 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
 
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 /**
  * A simple {@link WeekViewFragment} subclass.
@@ -58,7 +62,20 @@ public class WeekViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_week_view, container, false);
+
+        View rootView = inflater.inflate(R.layout.fragment_week_view, container, false);
+
+        GridView day_of_the_week = rootView.findViewById(R.id.day_of_the_week2);
+        final String[] dayOfTheWeek = new String[]{"일", "월", "화", "수", "목", "금", "토"};
+        ArrayAdapter<String> DOWadapter = new ArrayAdapter<>(getActivity(),
+                R.layout.day_of_the_week,
+                dayOfTheWeek);
+        day_of_the_week.setAdapter(DOWadapter);
+
+        ViewPager2 vpPager = rootView.findViewById(R.id.week_vp);
+        FragmentStateAdapter adapter = new WeekCalendarAdapter(getActivity());
+        vpPager.setAdapter(adapter);
+        vpPager.setCurrentItem(50);
+        return rootView;
     }
 }

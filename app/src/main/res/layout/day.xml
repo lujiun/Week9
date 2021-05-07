@@ -3,7 +3,7 @@
 simple_list_item1에서 gravity, textAppearance 요소 제거
 !-->
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/text1"
+    android:id="@+id/day_text"
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
