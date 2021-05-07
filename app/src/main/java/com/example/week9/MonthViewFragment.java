@@ -58,15 +58,15 @@ public class MonthViewFragment extends Fragment {
         ViewPager2 vpPager = rootview.findViewById(R.id.month_vp);
         FragmentStateAdapter adapter = new MonthCalendarAdapter(getActivity());
         vpPager.setAdapter(adapter);
-        int a = new MonthCalendarAdapter(getActivity()).year;
-        int b = new MonthCalendarAdapter(getActivity()).month;
+        int year = ((MonthCalendarAdapter) adapter).year;
+        int month = ((MonthCalendarAdapter) adapter).month;
         vpPager.setCurrentItem(50);
-        ((MonthViewActivity)getActivity()).getSupportActionBar().setTitle(a + "년 " + (b+1) + "월");
+        ((MonthViewActivity)getActivity()).getSupportActionBar().setTitle(year + "년 " + (month+1) + "월");
 
         vpPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                    ((MonthViewActivity) getActivity()).getSupportActionBar().setTitle((a + (b + position + 10) / 12 - 5) + "년 " + ((b + position + 10) % 12 + 1) + "월");
+                    ((MonthViewActivity) getActivity()).getSupportActionBar().setTitle((year + (month + position + 10) / 12 - 5) + "년 " + ((month + position + 10) % 12 + 1) + "월");
 
             }
         });

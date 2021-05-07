@@ -19,12 +19,12 @@ import androidx.viewpager2.widget.ViewPager2;
  */
 public class WeekViewFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
+
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
     private String mParam2;
 
@@ -77,10 +77,9 @@ public class WeekViewFragment extends Fragment {
         vpPager.setAdapter(adapter);
         vpPager.setCurrentItem(50);
 
-        /*TODO: 왜 이렇게 쓰는 지 확인*/
-        int year = new WeekCalendarAdapter(getActivity()).year;
-        int month = new WeekCalendarAdapter(getActivity()).month;
-        int week = new WeekCalendarAdapter(getActivity()).cur_week;
+        int year = ((WeekCalendarAdapter) adapter).year;
+        int month = ((WeekCalendarAdapter) adapter).month;
+        int week = ((WeekCalendarAdapter) adapter).cur_week;
 
         ((MonthViewActivity)getActivity()).getSupportActionBar().setTitle(year + "년 " + (month+1) + "월 " + (week+1) + "주차");
 

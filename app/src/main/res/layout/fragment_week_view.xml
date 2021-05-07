@@ -22,6 +22,7 @@
             android:background="#99cc00"
             android:numColumns="7"
             android:layout_weight="1"
+            android:horizontalSpacing="1dp"
             android:stretchMode="columnWidth"/>
     </LinearLayout>
 
