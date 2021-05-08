@@ -12,14 +12,21 @@ public class WeekCalendarAdapter extends FragmentStateAdapter {
     Calendar cal = Calendar.getInstance();
     int year = cal.get(Calendar.YEAR);
     int month = cal.get(Calendar.MONTH);
-    int cur_week = cal.get(Calendar.WEEK_OF_MONTH)-1;
+    int date = cal.get(Calendar.DATE);
+    int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-1; // 첫날 요일구하기
     public WeekCalendarAdapter(FragmentActivity fa){
         super(fa);
     }
 
     @Override
     public Fragment createFragment(int position) {
-        return WeekCalendarFragment.newInstance(year+(month+(cur_week+position+4)/6-9)/12, (month+(cur_week+position+4)/6-9), (cur_week+position+4)%6); //수정해야됨
+        int y,m,d,fd;
+        cal.set(year,month,date+((position-50)*7));
+        y = cal.get(Calendar.YEAR);
+        m = cal.get(Calendar.MONTH);
+        d = cal.get(Calendar.DATE);
+        fd = d-dayOfWeek;
+        return WeekCalendarFragment.newInstance(y,m,fd);
     }
 
     @Override

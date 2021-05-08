@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import java.util.Calendar;
+
 /**
  * A simple {@link WeekViewFragment} subclass.
  * Use the {@link WeekViewFragment#newInstance} factory method to
@@ -79,16 +81,21 @@ public class WeekViewFragment extends Fragment {
 
         int year = ((WeekCalendarAdapter) adapter).year;
         int month = ((WeekCalendarAdapter) adapter).month;
-        int week = ((WeekCalendarAdapter) adapter).cur_week;
+        int date = ((WeekCalendarAdapter) adapter).date;
+        int dayOfWeek = ((WeekCalendarAdapter) adapter).dayOfWeek;
 
-        ((MonthViewActivity)getActivity()).getSupportActionBar().setTitle(year + "년 " + (month+1) + "월 " + (week+1) + "주차");
+        ((MonthViewActivity)getActivity()).getSupportActionBar().setTitle(year + "년 " + (month+1) + "월 " );
 
         vpPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
 
             @Override
             public void onPageSelected(int position) {
-                ((MonthViewActivity) getActivity()).getSupportActionBar().setTitle( (year+((month + 12+ (week+position+4)/6-9)/12)-1) +"년 " + ((month + 12+ (week+position+4)/6 -9 ) %12+1) +"월 " + ((week + position+4)%6+1) +"주차");
-
+                int y,m,d,fd;
+                Calendar cal = Calendar.getInstance();
+                cal.set(year,month,date+((position-50)*7)-dayOfWeek);
+                y = cal.get(Calendar.YEAR);
+                m = cal.get(Calendar.MONTH);
+                ((MonthViewActivity) getActivity()).getSupportActionBar().setTitle(y + "년 " + (m+1) + "월 " );
             }
         });
         return rootView;

@@ -23,7 +23,7 @@ import java.util.Calendar;
  * create an instance of this fragment.
  */
 public class WeekCalendarFragment extends Fragment {
-    int max_day, dayOfWeek, cur_week;
+    int max_day,d;
     TextView sel_timeB;
     View sel_day;
 
@@ -79,18 +79,18 @@ public class WeekCalendarFragment extends Fragment {
 
         Calendar cal = Calendar.getInstance();
 
-        cal.set(mParam1, mParam2, 1);
+        cal.set(mParam1, mParam2, mParam3); //주 의 첫날 받았음
+        d = cal.get(Calendar.DATE);
         max_day = cal.getActualMaximum(Calendar.DAY_OF_MONTH); //해당 월의 마지막 날 구하기
-        dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-1; // 첫날 요일구하기
-        cur_week = mParam3;
+
 
         String[] day_s = new String[7];
         String[] time_s = new String[24];
         String[] timeB_s = new String[24*7];
 
-        for(int i=cur_week*7+1-dayOfWeek, count=0;count<7;i++,count++)
+        for(int i=d, count=0;count<7;i++,count++)
         {//현재 주차*7 +1(그 다음 첫번째 날을 가기 위함)- 첫날 요일까지 빼기
-            if(i<1||i>max_day) day_s[count] = "";
+            if(i>max_day) day_s[count] = (i%max_day)+"";
             else day_s[count] = i+"";
         }
 
