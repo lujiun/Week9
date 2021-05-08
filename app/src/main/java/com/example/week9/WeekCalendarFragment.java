@@ -119,7 +119,7 @@ public class WeekCalendarFragment extends Fragment {
         timeB.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(),"position = "+position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),d+position%7+"일 "+position/7+"시", Toast.LENGTH_SHORT).show();
                 if(sel_timeB!=null) {
                     sel_timeB.setBackgroundColor(Color.WHITE);
                     sel_day.setBackgroundColor(Color.WHITE);
