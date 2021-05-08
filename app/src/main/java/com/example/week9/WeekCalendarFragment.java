@@ -115,15 +115,21 @@ public class WeekCalendarFragment extends Fragment {
                 R.layout.timeb,
                 timeB_s);
         timeB.setAdapter(TBadapter);
-        sel_day = rootView.findViewById(R.id.day_text);
+        day.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(sel_day!=null) sel_day.setBackgroundColor(Color.WHITE);
+                if(sel_timeB!=null)sel_timeB.setBackgroundColor(Color.WHITE);
+                sel_day = view.findViewById(R.id.day_text);
+                sel_day.setBackgroundColor(Color.CYAN);
+                Toast.makeText(getActivity(),sel_day.getText()+"일", Toast.LENGTH_SHORT).show();
+            }
+        });
         timeB.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                if(sel_timeB!=null) {
-                    sel_timeB.setBackgroundColor(Color.WHITE);
-                    sel_day.setBackgroundColor(Color.WHITE);
-                }
+                if(sel_day!=null) sel_day.setBackgroundColor(Color.WHITE);
+                if(sel_timeB!=null)sel_timeB.setBackgroundColor(Color.WHITE);
                 sel_timeB = view.findViewById(R.id.timeb_text);
                 sel_timeB.setBackgroundColor(Color.CYAN);
                 sel_day = day.getChildAt(position%7).findViewById(R.id.day_text);
