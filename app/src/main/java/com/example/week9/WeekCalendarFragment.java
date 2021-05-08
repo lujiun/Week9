@@ -25,7 +25,7 @@ import java.util.Calendar;
 public class WeekCalendarFragment extends Fragment {
     int max_day,d;
     TextView sel_timeB;
-    View sel_day;
+    TextView sel_day;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -119,7 +119,7 @@ public class WeekCalendarFragment extends Fragment {
         timeB.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(),d+position%7+"일 "+position/7+"시", Toast.LENGTH_SHORT).show();
+
                 if(sel_timeB!=null) {
                     sel_timeB.setBackgroundColor(Color.WHITE);
                     sel_day.setBackgroundColor(Color.WHITE);
@@ -128,8 +128,7 @@ public class WeekCalendarFragment extends Fragment {
                 sel_timeB.setBackgroundColor(Color.CYAN);
                 sel_day = day.getChildAt(position%7).findViewById(R.id.day_text);
                 sel_day.setBackgroundColor(Color.CYAN);
-
-
+                Toast.makeText(getActivity(),sel_day.getText()+"일 "+position/7+"시", Toast.LENGTH_SHORT).show();
             }
         });
         // Inflate the layout for this fragment
