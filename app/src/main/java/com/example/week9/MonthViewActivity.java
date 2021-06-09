@@ -22,15 +22,11 @@ public class MonthViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FloatingActionButton fab = findViewById(R.id.fab);
+
 
 
         getSupportFragmentManager().beginTransaction().add(R.id.main_container, new MonthViewFragment()).commit();
-
     }
-
-
-
 
     //여기부터 앱바
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -44,12 +40,10 @@ public class MonthViewActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.month_view:
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new MonthViewFragment()).commit();
-                Toast.makeText(getApplicationContext(), "month_view", Toast.LENGTH_SHORT).show();
                 return true;
 
             case R.id.week_view:
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new WeekViewFragment()).commit();
-                Toast.makeText(getApplicationContext(), "week_view", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

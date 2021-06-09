@@ -1,5 +1,6 @@
 package com.example.week9;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MonthViewFragment extends Fragment {
 
@@ -70,7 +74,14 @@ public class MonthViewFragment extends Fragment {
 
             }
         });
-
+        FloatingActionButton fab = rootview.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NewSchedule.class);
+                startActivity(intent);
+            }
+        });
 
 
         return rootview;
