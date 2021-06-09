@@ -16,7 +16,7 @@
         tools:context=".NewSchedule">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
@@ -24,60 +24,82 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:text="제목"/>
+                android:text="제목 : "
+                android:textSize="20dp"
+                android:textStyle="bold"/>
             <EditText
                 android:id="@+id/ns_ed1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_toRightOf="@id/ns_text1"
+                android:textSize="20dp"
+                android:layout_weight="1"
                 android:width="100dp"/>
         </LinearLayout>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
             <TextView
                 android:id="@+id/ns_text2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="시작"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:text="시작 "
                 />
             <NumberPicker
                 android:id="@+id/ns_np1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"/>
             <NumberPicker
                 android:id="@+id/ns_np2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
                 />
             <NumberPicker
                 android:id="@+id/ns_np3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:scrollbarStyle="outsideInset"
+                android:selectionDividerHeight="@dimen/cardview_compat_inset_shadow"
                 />
         </LinearLayout>
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
             <TextView
                 android:id="@+id/ns_text3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="종료"/>
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:text="종료 "/>
             <NumberPicker
                 android:id="@+id/ns_np4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"/>
             <NumberPicker
                 android:id="@+id/ns_np5"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"/>
             <NumberPicker
                 android:id="@+id/ns_np6"
                 android:layout_width="wrap_content"
@@ -86,13 +108,14 @@
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <EditText
                 android:id="@+id/ns_ed2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:hint="장소"/>
             <Button
                 android:id="@+id/ns_bt1"
@@ -110,12 +133,13 @@
 
         <EditText
             android:id="@+id/ns_ed3"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:hint="메모"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -123,11 +147,13 @@
                 android:id="@+id/ns_bt2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
                 android:text="저장"/>
             <Button
                 android:id="@+id/ns_bt3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
                 android:text="취소"/>
             <Button
                 android:id="@+id/ns_bt4"

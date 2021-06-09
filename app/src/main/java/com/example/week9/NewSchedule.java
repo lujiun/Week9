@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,29 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_schedule);
+        NumberPicker start1 = findViewById(R.id.ns_np1);
+        NumberPicker start2 = findViewById(R.id.ns_np2);
+        NumberPicker start3 = findViewById(R.id.ns_np3);
+        NumberPicker end1 = findViewById(R.id.ns_np4);
+        NumberPicker end2 = findViewById(R.id.ns_np5);
+        NumberPicker end3 = findViewById(R.id.ns_np6);
+        String str[] = {"AM","PM"};
+        start1.setMinValue(1); start1.setMaxValue(12);
+        start2.setMaxValue(59); start3.setMaxValue(1);start3.setDisplayedValues(str);
+        end1.setMinValue(1); end1.setMaxValue(12);
+        end2.setMaxValue(59);end3.setMaxValue(1);end3.setDisplayedValues(str);
+        start2.setFormatter(new NumberPicker.Formatter() {
+            @Override
+            public String format(int value) {
+                return String.format("%02d", value);
+            }
+        });
+        end2.setFormatter(new NumberPicker.Formatter() {
+            @Override
+            public String format(int value) {
+                return String.format("%02d", value);
+            }
+        });
 
         //지도 이용
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -56,6 +80,8 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
             }
         });
     }
+
+    //지도 관련
     private void getLocation() {
         EditText map_text = findViewById(R.id.ns_ed2);
         String search_address = map_text.getText().toString();

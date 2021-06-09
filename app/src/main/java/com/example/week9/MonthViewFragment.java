@@ -74,6 +74,7 @@ public class MonthViewFragment extends Fragment {
 
             }
         });
+
         FloatingActionButton fab = rootview.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
