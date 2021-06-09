@@ -16,14 +16,22 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class MonthViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FloatingActionButton fab = findViewById(R.id.fab);
+
 
         getSupportFragmentManager().beginTransaction().add(R.id.main_container, new MonthViewFragment()).commit();
 
     }
+
+
+
+
     //여기부터 앱바
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

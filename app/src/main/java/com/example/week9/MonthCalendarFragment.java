@@ -22,6 +22,7 @@ public class MonthCalendarFragment extends Fragment {
     int max_day;
     int dayOfWeek;
     TextView sel_day;
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
