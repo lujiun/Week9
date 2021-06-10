@@ -2,8 +2,10 @@ package com.example.week9;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.databinding.DataBindingUtil;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -17,6 +19,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.week9.databinding.ActivityNewScheduleBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,6 +37,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback {
+    public ActivityNewScheduleBinding binding;
     private FusedLocationProviderClient mFusedLocationClient;
     GoogleMap mGoogleMap = null;
     private Geocoder geocoder;
@@ -41,7 +45,15 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_schedule);
+        binding = ActivityNewScheduleBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+        Intent intent = getIntent();
+        EditText ed1 = findViewById(R.id.ns_ed1);
+        ed1.setText(intent.getStringExtra("date"));
+
+
+        //NumberPicker 설정
         NumberPicker start1 = findViewById(R.id.ns_np1);
         NumberPicker start2 = findViewById(R.id.ns_np2);
         NumberPicker start3 = findViewById(R.id.ns_np3);
@@ -49,9 +61,9 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
         NumberPicker end2 = findViewById(R.id.ns_np5);
         NumberPicker end3 = findViewById(R.id.ns_np6);
         String str[] = {"AM","PM"};
-        start1.setMinValue(1); start1.setMaxValue(12);
+        start1.setMinValue(1); start1.setMaxValue(12); start1.setValue(8);
         start2.setMaxValue(59); start3.setMaxValue(1);start3.setDisplayedValues(str);
-        end1.setMinValue(1); end1.setMaxValue(12);
+        end1.setMinValue(1); end1.setMaxValue(12); end1.setValue(8);
         end2.setMaxValue(59);end3.setMaxValue(1);end3.setDisplayedValues(str);
         start2.setFormatter(new NumberPicker.Formatter() {
             @Override

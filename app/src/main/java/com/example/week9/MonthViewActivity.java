@@ -1,8 +1,12 @@
 package com.example.week9;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -19,11 +23,12 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MonthViewActivity extends AppCompatActivity {
+    String mainDate;
+    int[] mainStartTime = new int[3];
+    int[] mainEndTime = new int[3];
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
         getSupportFragmentManager().beginTransaction().add(R.id.main_container, new MonthViewFragment()).commit();
     }

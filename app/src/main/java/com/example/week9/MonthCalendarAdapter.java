@@ -16,6 +16,7 @@ public class MonthCalendarAdapter extends FragmentStateAdapter {
     Calendar cal = Calendar.getInstance();
     int year = cal.get(Calendar.YEAR);
     int month = cal.get(Calendar.MONTH);
+    int day;
 
     public Fragment createFragment(int position) {
             return MonthCalendarFragment.newInstance(year + ((month + position + 10) / 12 - 5), (month + position + 10) % 12);

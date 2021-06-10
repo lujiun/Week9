@@ -3,7 +3,11 @@ package com.example.week9;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -14,15 +18,20 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.example.week9.databinding.ActivityNewScheduleBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MonthViewFragment extends Fragment {
-
+    public ActivityNewScheduleBinding binding;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private int mParam1;
     private int mParam2;
+
+    String data_d;
+    int[] start_t;
+    int[] end_t;
 
     public MonthViewFragment() {
         // Required empty public constructor
@@ -40,6 +49,7 @@ public class MonthViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getInt(ARG_PARAM1);
             mParam2 = getArguments().getInt(ARG_PARAM2);
@@ -49,7 +59,6 @@ public class MonthViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View rootview = inflater.inflate(R.layout.fragment_month_view, container, false);
 
         GridView day_of_the_week = rootview.findViewById(R.id.day_of_the_week1);
@@ -66,20 +75,22 @@ public class MonthViewFragment extends Fragment {
         int month = ((MonthCalendarAdapter) adapter).month;
         vpPager.setCurrentItem(50);
         ((MonthViewActivity)getActivity()).getSupportActionBar().setTitle(year + "년 " + (month+1) + "월");
-
         vpPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                     ((MonthViewActivity) getActivity()).getSupportActionBar().setTitle((year + (month + position + 10) / 12 - 5) + "년 " + ((month + position + 10) % 12 + 1) + "월");
-
+                    ((MonthViewActivity) getActivity()).mainDate= "";
             }
         });
+
 
         FloatingActionButton fab = rootview.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                data_d = ((MonthViewActivity) getActivity()).mainDate;
                 Intent intent = new Intent(getActivity(), NewSchedule.class);
+                intent.putExtra("date", data_d);
                 startActivity(intent);
             }
         });

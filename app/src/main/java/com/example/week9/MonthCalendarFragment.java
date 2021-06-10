@@ -18,7 +18,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static androidx.fragment.app.FragmentKt.setFragmentResult;
+
 public class MonthCalendarFragment extends Fragment {
+
     int max_day;
     int dayOfWeek;
     TextView sel_day;
@@ -55,9 +58,17 @@ public class MonthCalendarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_month_calendar, container, false);
+//        binding.fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getActivity(),
+//                        "무야호",
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
         GridView gridView = rootview.findViewById(R.id.gridview);
         Calendar cal = Calendar.getInstance();
-
         cal.set(mParam1, mParam2, 1);
         max_day = cal.getActualMaximum(Calendar.DAY_OF_MONTH); //해당 월의 마지막 날 구하기
         dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-1; // 첫날 요일구하기, 0부터 시작하기 위해 1을 빼주었다.
@@ -84,6 +95,7 @@ public class MonthCalendarFragment extends Fragment {
                     if(sel_day!=null) sel_day.setBackgroundColor(Color.WHITE); //이전 선택값 흰색으로 돌리기
                     sel_day = v.findViewById(R.id.day_text);
                     sel_day.setBackgroundColor(Color.CYAN); //선택된 텍스트 뷰 색깔 변경
+                    ((MonthViewActivity) getActivity()).mainDate = String.format("%d년 %d월 %d일",mParam1,(mParam2 + 1),(position - dayOfWeek + 1));
                 }
             }
         });

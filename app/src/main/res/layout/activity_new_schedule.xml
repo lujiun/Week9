@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="left"
+        android:gravity="start"
         android:padding="30dp"
         tools:context=".NewSchedule">
 
@@ -23,7 +22,6 @@
                 android:id="@+id/ns_text1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
                 android:text="제목 : "
                 android:textSize="20dp"
                 android:textStyle="bold"/>
@@ -31,8 +29,6 @@
                 android:id="@+id/ns_ed1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_toRightOf="@id/ns_text1"
                 android:textSize="20dp"
                 android:layout_weight="1"
                 android:width="100dp"/>
@@ -46,9 +42,11 @@
                 android:id="@+id/ns_text2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:text="시작 "
+
                 />
             <NumberPicker
                 android:id="@+id/ns_np1"
@@ -84,9 +82,11 @@
                 android:id="@+id/ns_text3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:text="종료 "/>
+                android:text="종료 "
+                />
             <NumberPicker
                 android:id="@+id/ns_np4"
                 android:layout_width="wrap_content"
@@ -164,3 +164,4 @@
 
     </LinearLayout>
 </ScrollView>
+</layout>
