@@ -7,15 +7,20 @@ import androidx.databinding.DataBindingUtil;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.NumberPicker;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +46,7 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
     private FusedLocationProviderClient mFusedLocationClient;
     GoogleMap mGoogleMap = null;
     private Geocoder geocoder;
-
+    private DBHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +57,8 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
         Intent intent = getIntent();
         EditText ed1 = findViewById(R.id.ns_ed1);
         ed1.setText(intent.getStringExtra("date"));
+        EditText ed2 = findViewById(R.id.ns_ed2);
+        EditText ed3 = findViewById(R.id.ns_ed3);
 
 
         //NumberPicker 설정
@@ -81,7 +88,43 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
         int data_st = intent.getIntExtra("startTime",8);
         start1.setValue(data_st%12); end1.setValue((data_st+1)%12);
         start3.setValue(data_st/12); end3.setValue((data_st+1)%24/12);
-
+        
+        //SQLite 이용
+        dbHelper = new DBHelper(this);
+        Button save_btn = findViewById(R.id.ns_bt2);
+        save_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(NewSchedule.this,"저장한다", Toast.LENGTH_SHORT).show();
+                dbHelper.insertMemoBySQL(
+                        ed1.getText().toString(),
+                        start1.getValue(), start2.getValue(), start3.getValue(),
+                        end1.getValue(), end2.getValue(), end3.getValue(),
+                        ed2.getText().toString(),
+                        ed3.getText().toString()
+                        );
+                viewAllToTextView();
+            }
+        });
+        Button cancel_btn = findViewById(R.id.ns_bt3);
+        cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(NewSchedule.this,"나 나간다.", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+        //실험용 editText라 구현할때 없애면 됨
+        EditText _id = findViewById(R.id.sql_id);
+        Button delete_btn = findViewById(R.id.ns_bt4);
+        delete_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(NewSchedule.this,"나 삭제한다.", Toast.LENGTH_SHORT).show();
+                dbHelper.deleteMemoBySQL(_id.getText().toString());
+                viewAllToTextView();
+            }
+        });
 
         //지도 이용
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -97,8 +140,30 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
             }
         });
     }
+    //SQLite 관련 함수
+    //저장 삭제 확인용으로 지워도 무방
+    private void viewAllToTextView() {
+        TextView result = (TextView)findViewById(R.id.result);
 
-    //지도 관련
+        Cursor cursor = dbHelper.getAllMemosBySQL();
+
+        StringBuffer buffer = new StringBuffer();
+        while (cursor.moveToNext()) {
+            buffer.append(cursor.getInt(0)+" \t");
+            buffer.append(cursor.getString(1)+" \t");
+            buffer.append(cursor.getString(2)+" \t");
+            buffer.append(cursor.getString(3)+" \t");
+            buffer.append(cursor.getString(4)+" \t");
+            buffer.append(cursor.getString(5)+" \t");
+            buffer.append(cursor.getString(6)+" \t");
+            buffer.append(cursor.getString(7)+" \t");
+            buffer.append(cursor.getString(8)+" \t");
+            buffer.append(cursor.getString(9)+"\n");
+        }
+        result.setText(buffer);
+    }
+
+    //지도 관련 함수
     private void getLocation() {
         EditText map_text = findViewById(R.id.ns_ed2);
         String search_address = map_text.getText().toString();
@@ -107,10 +172,6 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
             if (addresses.size() >0) {
                 Address bestResult = (Address) addresses.get(0);
                 LatLng location = new LatLng(bestResult.getLatitude(),bestResult.getLongitude());
-                Toast.makeText(getApplicationContext(),
-                        "No"+bestResult.getLatitude(),
-                        Toast.LENGTH_SHORT)
-                        .show();
                 mGoogleMap.addMarker(new MarkerOptions().
                         position(location).
                         title("검색 위치").
