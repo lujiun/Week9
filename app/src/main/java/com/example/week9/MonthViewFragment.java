@@ -30,8 +30,7 @@ public class MonthViewFragment extends Fragment {
     private int mParam2;
 
     String data_d;
-    int[] start_t;
-    int[] end_t;
+
 
     public MonthViewFragment() {
         // Required empty public constructor

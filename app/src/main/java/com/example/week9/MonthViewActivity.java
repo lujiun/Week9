@@ -23,9 +23,10 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MonthViewActivity extends AppCompatActivity {
+    //메인 액티비티를 경유하여 프래그먼트 데이터 전달
     String mainDate;
-    int[] mainStartTime = new int[3];
-    int[] mainEndTime = new int[3];
+    int mainStartTime;
+    int mainEndTime;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

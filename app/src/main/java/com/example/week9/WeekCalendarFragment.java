@@ -23,7 +23,7 @@ import java.util.Calendar;
  * create an instance of this fragment.
  */
 public class WeekCalendarFragment extends Fragment {
-    int max_day,d;
+    int max_day,y,sub_y,m,sub_m,d,sub_d;
     TextView sel_timeB;
     TextView sel_day;
 
@@ -80,6 +80,9 @@ public class WeekCalendarFragment extends Fragment {
         Calendar cal = Calendar.getInstance();
 
         cal.set(mParam1, mParam2, mParam3); //주 의 첫날 받았음
+        y = cal.get(Calendar.YEAR);
+        m = cal.get(Calendar.MONTH);
+        sub_m = m; sub_y =y;
         d = cal.get(Calendar.DATE);
         max_day = cal.getActualMaximum(Calendar.DAY_OF_MONTH); //해당 월의 마지막 날 구하기
 
@@ -122,7 +125,12 @@ public class WeekCalendarFragment extends Fragment {
                 if(sel_timeB!=null)sel_timeB.setBackgroundColor(Color.WHITE);
                 sel_day = view.findViewById(R.id.day_text);
                 sel_day.setBackgroundColor(Color.CYAN);
-                Toast.makeText(getActivity(),sel_day.getText()+"일", Toast.LENGTH_SHORT).show();
+                // 선택된 날짜의 값에 따라 월을 구분하기 위함
+                sub_d = Integer.parseInt(sel_day.getText().toString());
+                if(sub_d<d) {sub_m=m+1; if(sub_m>11) {sub_m = 0; sub_y=y+1;}}
+                else {sub_y=y;sub_m=m;}
+                ((MonthViewActivity)getActivity()).mainDate = String.format("%d년 %d월 %d일",sub_y,sub_m+1,sub_d);
+                Toast.makeText(getActivity(), sub_d+"일", Toast.LENGTH_SHORT).show();
             }
         });
         timeB.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -134,6 +142,12 @@ public class WeekCalendarFragment extends Fragment {
                 sel_timeB.setBackgroundColor(Color.CYAN);
                 sel_day = day.getChildAt(position%7).findViewById(R.id.day_text);
                 sel_day.setBackgroundColor(Color.CYAN);
+                // 선택된 날짜의 값에 따라 월을 구분하기 위함
+                sub_d = Integer.parseInt(sel_day.getText().toString());
+                if(sub_d<d) {sub_m=m+1; if(sub_m>11) {sub_m = 0; sub_y=y+1;}}
+                else {sub_y=y;sub_m=m;}
+                ((MonthViewActivity)getActivity()).mainDate = String.format("%d년 %d월 %d일 %d시",sub_y,sub_m+1,sub_d,position/7);
+                ((MonthViewActivity)getActivity()).mainStartTime = position/7;
                 Toast.makeText(getActivity(),sel_day.getText()+"일 "+position/7+"시", Toast.LENGTH_SHORT).show();
             }
         });

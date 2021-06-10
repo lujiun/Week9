@@ -1,5 +1,6 @@
 package com.example.week9;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import android.widget.GridView;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
 
@@ -29,6 +32,9 @@ public class WeekViewFragment extends Fragment {
 
     private String mParam1;
     private String mParam2;
+
+    String data_d;
+    int data_st;
 
     public WeekViewFragment() {
         // Required empty public constructor
@@ -90,14 +96,30 @@ public class WeekViewFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-                int y,m,d,fd;
+                int y,m;
                 Calendar cal = Calendar.getInstance();
                 cal.set(year,month,date+((position-50)*7)-dayOfWeek);
                 y = cal.get(Calendar.YEAR);
                 m = cal.get(Calendar.MONTH);
                 ((MonthViewActivity) getActivity()).getSupportActionBar().setTitle(y + "년 " + (m+1) + "월 " );
+                ((MonthViewActivity) getActivity()).mainDate="";
             }
         });
+        //플로팅 액션 바
+        FloatingActionButton fab = rootView.findViewById(R.id.fab1);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //값 전달
+                data_d = ((MonthViewActivity) getActivity()).mainDate;
+                data_st = ((MonthViewActivity) getActivity()).mainStartTime;
+                Intent intent = new Intent(getActivity(), NewSchedule.class);
+                intent.putExtra("date", data_d);
+                intent.putExtra("startTime",data_st);
+                startActivity(intent);
+            }
+        });
+
         return rootView;
     }
 }

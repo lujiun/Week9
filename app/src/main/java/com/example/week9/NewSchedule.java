@@ -48,6 +48,7 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
         binding = ActivityNewScheduleBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        //전달받은 값 가져오기
         Intent intent = getIntent();
         EditText ed1 = findViewById(R.id.ns_ed1);
         ed1.setText(intent.getStringExtra("date"));
@@ -61,9 +62,9 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
         NumberPicker end2 = findViewById(R.id.ns_np5);
         NumberPicker end3 = findViewById(R.id.ns_np6);
         String str[] = {"AM","PM"};
-        start1.setMinValue(1); start1.setMaxValue(12); start1.setValue(8);
+        start1.setMinValue(1); start1.setMaxValue(12);
         start2.setMaxValue(59); start3.setMaxValue(1);start3.setDisplayedValues(str);
-        end1.setMinValue(1); end1.setMaxValue(12); end1.setValue(8);
+        end1.setMinValue(1); end1.setMaxValue(12);
         end2.setMaxValue(59);end3.setMaxValue(1);end3.setDisplayedValues(str);
         start2.setFormatter(new NumberPicker.Formatter() {
             @Override
@@ -77,6 +78,10 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
                 return String.format("%02d", value);
             }
         });
+        int data_st = intent.getIntExtra("startTime",8);
+        start1.setValue(data_st%12); end1.setValue((data_st+1)%12);
+        start3.setValue(data_st/12); end3.setValue((data_st+1)%24/12);
+
 
         //지도 이용
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
