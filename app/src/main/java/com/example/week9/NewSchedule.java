@@ -1,10 +1,12 @@
 package com.example.week9;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -116,13 +118,23 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
         });
         //실험용 editText라 구현할때 없애면 됨
         EditText _id = findViewById(R.id.sql_id);
+        //삭제시 다이얼 로그 구현
+        AlertDialog.Builder dlg = new AlertDialog.Builder(NewSchedule.this);
+        dlg.setMessage("정말 삭제하시겠습니까?");
+        dlg.setNegativeButton("삭제", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dbHelper.deleteMemoBySQL(_id.getText().toString());
+                viewAllToTextView();
+            }
+        });
+        dlg.setPositiveButton("취소",null);
+
         Button delete_btn = findViewById(R.id.ns_bt4);
         delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(NewSchedule.this,"나 삭제한다.", Toast.LENGTH_SHORT).show();
-                dbHelper.deleteMemoBySQL(_id.getText().toString());
-                viewAllToTextView();
+                dlg.show();
             }
         });
 
