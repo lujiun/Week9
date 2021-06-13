@@ -1,6 +1,13 @@
 package com.example.week9;
 
+import android.app.AlertDialog;
+import android.content.ContextWrapper;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +18,7 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +29,8 @@ import android.widget.Toast;
 import com.example.week9.databinding.ActivityNewScheduleBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import static com.example.week9.DBHelper.TAG;
+
 public class MonthViewFragment extends Fragment {
     public ActivityNewScheduleBinding binding;
     private static final String ARG_PARAM1 = "param1";
@@ -29,8 +39,15 @@ public class MonthViewFragment extends Fragment {
     private int mParam1;
     private int mParam2;
 
-    String data_d;
+    DBHelper dbHelper;
+    Cursor cursor;
 
+    String data_d;
+    int data_year;
+    int data_month;
+    int data_day;
+    int data_hour;
+    int data_minute;
 
     public MonthViewFragment() {
         // Required empty public constructor
@@ -87,9 +104,39 @@ public class MonthViewFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 data_d = ((MonthViewActivity) getActivity()).mainDate;
+                data_year = ((MonthViewActivity) getActivity()).mainYear;
+                data_month = ((MonthViewActivity) getActivity()).mainMonth;
+                data_day = ((MonthViewActivity) getActivity()).mainDay;
+                data_hour = ((MonthViewActivity) getActivity()).mainHour;
+                data_minute = ((MonthViewActivity) getActivity()).mainMinute;
+
                 Intent intent = new Intent(getActivity(), NewSchedule.class);
                 intent.putExtra("date", data_d);
+                intent.putExtra("year", data_year);
+                intent.putExtra("month", data_month);
+                intent.putExtra("day", data_day);
+                intent.putExtra("hour", data_hour);
+                intent.putExtra("minute", data_minute);
+
+                String title1 = intent.getStringExtra("title1");
+                String title2 = intent.getStringExtra("title2");
+                String title3 = intent.getStringExtra("title3");
+
+//                final String[] titles = new String[] {title1, title2, title3};
+
+//                AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+//                dlg.setTitle(data_d);
+//                dlg.setItems(titles, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        String selected = titles[which];
+//                        Toast.makeText(getActivity(), selected, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//                dlg.show();
+
                 startActivity(intent);
             }
         });

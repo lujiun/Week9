@@ -24,6 +24,9 @@ public final class MemoContract {
         public static final String KEY_E_MERIDIEM = "eMeridiem";
         public static final String KEY_PLACE = "place";
         public static final String KEY_MEMO = "memo";
+        public static final String KEY_YEAR = "year";
+        public static final String KEY_MONTH = "monty";
+        public static final String KEY_DAY = "day";
 
         public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY" + COMMA_SEP +
@@ -35,7 +38,10 @@ public final class MemoContract {
                 KEY_E_MIN + INT_TYPE + COMMA_SEP +
                 KEY_E_MERIDIEM + INT_TYPE + COMMA_SEP +
                 KEY_PLACE + TEXT_TYPE + COMMA_SEP +
-                KEY_MEMO + TEXT_TYPE +
+                KEY_MEMO + TEXT_TYPE + COMMA_SEP +
+                KEY_YEAR + INT_TYPE + COMMA_SEP +
+                KEY_MONTH + INT_TYPE + COMMA_SEP +
+                KEY_DAY + INT_TYPE +
                 " )";
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }

@@ -6,6 +6,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 
 public class DBHelper extends SQLiteOpenHelper {
     final static String TAG = "SQLiteDBTest";
@@ -27,10 +29,10 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertMemoBySQL(String title, int sh, int sm, int sme, int eh, int em, int eme, String place, String memo) {
+    public void insertMemoBySQL(String title, int sh, int sm, int sme, int eh, int em, int eme, String place, String memo, int ye, int mo, int da) {
         try {
             String sql = String.format (
-                    "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) VALUES (NULL, '%s', %d, %d, %d, %d, %d, %d, '%s', '%s')",
+                    "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) VALUES (NULL, '%s', %d, %d, %d, %d, %d, %d, '%s', '%s', %d, %d, %d)",
                     MemoContract.Memos.TABLE_NAME,
                     MemoContract.Memos._ID,
                     MemoContract.Memos.KEY_TITLE,
@@ -42,19 +44,26 @@ public class DBHelper extends SQLiteOpenHelper {
                     MemoContract.Memos.KEY_E_MERIDIEM,
                     MemoContract.Memos.KEY_PLACE,
                     MemoContract.Memos.KEY_MEMO,
-                    title, sh, sm, sme, eh, em, eme, place, memo);
+                    MemoContract.Memos.KEY_YEAR,
+                    MemoContract.Memos.KEY_MONTH,
+                    MemoContract.Memos.KEY_DAY,
+                    title, sh, sm, sme, eh, em, eme, place, memo, ye, mo, da);
             getWritableDatabase().execSQL(sql);
         } catch (SQLException e) {
             Log.e(TAG,"Error in inserting recodes");
         }
     }
-    public void deleteMemoBySQL(String _id) {
+    public void deleteMemoBySQL(int year, int month, int day) {
         try {
             String sql = String.format (
-                    "DELETE FROM %s WHERE %s = %s",
+                    "DELETE FROM %s WHERE %s = %s AND %s = %s AND %s = %s",
                     MemoContract.Memos.TABLE_NAME,
-                    MemoContract.Memos._ID,
-                    _id);
+                    MemoContract.Memos.KEY_YEAR,
+                    year,
+                    MemoContract.Memos.KEY_MONTH,
+                    month,
+                    MemoContract.Memos.KEY_DAY,
+                    day);
             getWritableDatabase().execSQL(sql);
         } catch (SQLException e) {
             Log.e(TAG,"Error in deleting recodes");
@@ -75,6 +84,22 @@ public class DBHelper extends SQLiteOpenHelper {
 //    }
     public Cursor getAllMemosBySQL() {
         String sql = "Select * FROM " + MemoContract.Memos.TABLE_NAME;
+        return getReadableDatabase().rawQuery(sql,null);
+    }
+
+    public Cursor selectMemosBySQL(int year, int month, int day) {
+        String sql = String.format("SELECT %s FROM %s " +
+                "WHERE %s = %s " +
+                "AND %s = %s " +
+                "AND %s = %s",
+                MemoContract.Memos.KEY_TITLE,
+                MemoContract.Memos.TABLE_NAME,
+                MemoContract.Memos.KEY_YEAR,
+                year,
+                MemoContract.Memos.KEY_MONTH,
+                month,
+                MemoContract.Memos.KEY_DAY,
+                day);
         return getReadableDatabase().rawQuery(sql,null);
     }
 }

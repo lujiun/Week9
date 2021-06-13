@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -61,7 +62,16 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
         ed1.setText(intent.getStringExtra("date"));
         EditText ed2 = findViewById(R.id.ns_ed2);
         EditText ed3 = findViewById(R.id.ns_ed3);
+        int year = intent.getIntExtra("year", 0);
+        int month = intent.getIntExtra("month", 0);
+        int day = intent.getIntExtra("day", 0);
+        int hour = intent.getIntExtra("hour", 0);
+        int minute = intent.getIntExtra("minute", 0);
 
+        MonthViewFragment monthViewFragment = new MonthViewFragment();
+        Bundle bundle = new Bundle();
+
+        SQLiteDatabase db;
 
         //NumberPicker 설정
         NumberPicker start1 = findViewById(R.id.ns_np1);
@@ -88,6 +98,7 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
             }
         });
         int data_st = intent.getIntExtra("startTime",8);
+
         start1.setValue(data_st%12); end1.setValue((data_st+1)%12);
         start3.setValue(data_st/12); end3.setValue((data_st+1)%24/12);
         
@@ -103,7 +114,10 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
                         start1.getValue(), start2.getValue(), start3.getValue(),
                         end1.getValue(), end2.getValue(), end3.getValue(),
                         ed2.getText().toString(),
-                        ed3.getText().toString()
+                        ed3.getText().toString(),
+                        year,
+                        month,
+                        day
                         );
                 viewAllToTextView();
             }
@@ -116,15 +130,19 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
                 finish();
             }
         });
+
         //실험용 editText라 구현할때 없애면 됨
         EditText _id = findViewById(R.id.sql_id);
+
         //삭제시 다이얼 로그 구현
         AlertDialog.Builder dlg = new AlertDialog.Builder(NewSchedule.this);
         dlg.setMessage("정말 삭제하시겠습니까?");
         dlg.setNegativeButton("삭제", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                dbHelper.deleteMemoBySQL(_id.getText().toString());
+                Cursor cursor = dbHelper.getAllMemosBySQL();
+                dbHelper.deleteMemoBySQL(year, month, day);
+
                 viewAllToTextView();
             }
         });
@@ -151,7 +169,24 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
                  getLocation();
             }
         });
+
+//        Cursor c = dbHelper.selectMemosBySQL(year, month, day);
+//        c.moveToFirst();
+//        if(c.getCount() == 1) {
+//            intent.putExtra("title1", c.getString(2));
+//        } else if (c.getCount() == 2) {
+//            intent.putExtra("title1", c.getString(2));
+//            c.moveToNext();
+//            intent.putExtra("title2", c.getString(2));
+//        } else if (c.getCount() == 3) {
+//            intent.putExtra("title1", c.getString(2));
+//            c.moveToNext();
+//            intent.putExtra("title2", c.getString(2));
+//            c.moveToNext();
+//            intent.putExtra("title3", c.getString(2));
+//        }
     }
+
     //SQLite 관련 함수
     //저장 삭제 확인용으로 지워도 무방
     private void viewAllToTextView() {
@@ -170,7 +205,10 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
             buffer.append(cursor.getString(6)+" \t");
             buffer.append(cursor.getString(7)+" \t");
             buffer.append(cursor.getString(8)+" \t");
-            buffer.append(cursor.getString(9)+"\n");
+            buffer.append(cursor.getString(9)+" \t");
+            buffer.append(cursor.getString(10)+" \t");
+            buffer.append(cursor.getString(11)+" \t");
+            buffer.append(cursor.getString(12)+" \n");
         }
         result.setText(buffer);
     }

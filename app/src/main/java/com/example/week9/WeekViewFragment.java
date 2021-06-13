@@ -35,6 +35,11 @@ public class WeekViewFragment extends Fragment {
 
     String data_d;
     int data_st;
+    int data_year;
+    int data_month;
+    int data_day;
+    int data_hour;
+    int data_minute;
 
     public WeekViewFragment() {
         // Required empty public constructor
@@ -112,10 +117,23 @@ public class WeekViewFragment extends Fragment {
             public void onClick(View v) {
                 //값 전달
                 data_d = ((MonthViewActivity) getActivity()).mainDate;
+                data_year = ((MonthViewActivity) getActivity()).mainYear;
+                data_month = ((MonthViewActivity) getActivity()).mainMonth;
+                data_day = ((MonthViewActivity) getActivity()).mainDay;
+                data_hour = ((MonthViewActivity) getActivity()).mainHour;
+                data_minute = ((MonthViewActivity) getActivity()).mainMinute;
                 data_st = ((MonthViewActivity) getActivity()).mainStartTime;
+
                 Intent intent = new Intent(getActivity(), NewSchedule.class);
                 intent.putExtra("date", data_d);
                 intent.putExtra("startTime",data_st);
+                intent.putExtra("date", data_d);
+                intent.putExtra("year", data_year);
+                intent.putExtra("month", data_month);
+                intent.putExtra("day", data_day);
+                intent.putExtra("hour", data_hour);
+                intent.putExtra("minute", data_minute);
+
                 startActivity(intent);
             }
         });

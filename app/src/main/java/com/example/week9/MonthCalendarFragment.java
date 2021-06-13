@@ -1,5 +1,8 @@
 package com.example.week9;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -22,6 +25,8 @@ import static androidx.fragment.app.FragmentKt.setFragmentResult;
 
 public class MonthCalendarFragment extends Fragment {
 
+//    Intent intent = new Intent(getActivity(), NewSchedule.class);
+
     int max_day;
     int dayOfWeek;
     TextView sel_day;
@@ -31,6 +36,8 @@ public class MonthCalendarFragment extends Fragment {
 
     private int mParam1;
     private int mParam2;
+
+    DBHelper dbHelper;
 
     public MonthCalendarFragment() {
         // Required empty public constructor
@@ -58,14 +65,13 @@ public class MonthCalendarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_month_calendar, container, false);
-//        binding.fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getActivity(),
-//                        "무야호",
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
+        Intent intent = new Intent(getActivity(), NewSchedule.class);
+
+//        Cursor cursor = dbHelper.getAllMemosBySQL();
+        int cyear = intent.getIntExtra("year", 0);
+        int cmonth = intent.getIntExtra("month", 0);
+        int cday = intent.getIntExtra("day", 0);
 
         GridView gridView = rootview.findViewById(R.id.gridview);
         Calendar cal = Calendar.getInstance();
@@ -77,6 +83,7 @@ public class MonthCalendarFragment extends Fragment {
 
         for (int i = 0; i < days.length; i++) {
             if(i<dayOfWeek||i>max_day+dayOfWeek-1) days[i]= "";
+//            else if (cyear == 0) ;
             else days[i] = Integer.toString(i-dayOfWeek+1);
         }
 
@@ -95,7 +102,11 @@ public class MonthCalendarFragment extends Fragment {
                     if(sel_day!=null) sel_day.setBackgroundColor(Color.WHITE); //이전 선택값 흰색으로 돌리기
                     sel_day = v.findViewById(R.id.day_text);
                     sel_day.setBackgroundColor(Color.CYAN); //선택된 텍스트 뷰 색깔 변경
-                    ((MonthViewActivity) getActivity()).mainDate = String.format("%d년 %d월 %d일",mParam1,(mParam2 + 1),(position - dayOfWeek + 1));
+
+                    ((MonthViewActivity)getActivity()).mainDate = String.format("%d년 %d월 %d일",mParam1,(mParam2 + 1),(position - dayOfWeek + 1));
+                    ((MonthViewActivity)getActivity()).mainYear = mParam1;
+                    ((MonthViewActivity)getActivity()).mainMonth = mParam2+1;
+                    ((MonthViewActivity)getActivity()).mainDay = position - dayOfWeek + 1;
                 }
             }
         });

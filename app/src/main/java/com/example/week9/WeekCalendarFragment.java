@@ -130,6 +130,9 @@ public class WeekCalendarFragment extends Fragment {
                 if(sub_d<d) {sub_m=m+1; if(sub_m>11) {sub_m = 0; sub_y=y+1;}}
                 else {sub_y=y;sub_m=m;}
                 ((MonthViewActivity)getActivity()).mainDate = String.format("%d년 %d월 %d일",sub_y,sub_m+1,sub_d);
+                ((MonthViewActivity)getActivity()).mainHour = (sub_m+1)/12;
+                ((MonthViewActivity)getActivity()).mainMinute = sub_d;
+                ((MonthViewActivity)getActivity()).mainMeridiem = (sub_m+1)%12;
                 Toast.makeText(getActivity(), sub_d+"일", Toast.LENGTH_SHORT).show();
             }
         });
@@ -147,6 +150,10 @@ public class WeekCalendarFragment extends Fragment {
                 if(sub_d<d) {sub_m=m+1; if(sub_m>11) {sub_m = 0; sub_y=y+1;}}
                 else {sub_y=y;sub_m=m;}
                 ((MonthViewActivity)getActivity()).mainDate = String.format("%d년 %d월 %d일 %d시",sub_y,sub_m+1,sub_d,position/7);
+                ((MonthViewActivity)getActivity()).mainYear = sub_y;
+                ((MonthViewActivity)getActivity()).mainMonth = sub_m+1;
+                ((MonthViewActivity)getActivity()).mainDay = sub_d;
+                ((MonthViewActivity)getActivity()).mainMeridiem = (position/7)%12;
                 ((MonthViewActivity)getActivity()).mainStartTime = position/7;
                 Toast.makeText(getActivity(),sel_day.getText()+"일 "+position/7+"시", Toast.LENGTH_SHORT).show();
             }
