@@ -2,12 +2,30 @@
 <!--
 simple_list_item1에서 gravity, textAppearance 요소 제거
 !-->
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/day_text"
-    android:background="@color/white"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/day_Layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-    android:minHeight="88dp" />
+    android:minHeight="88dp"
+    android:padding="2dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/day_text"
+        android:textSize="10dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+         />
+    <ListView
+        android:id="@+id/day_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+</LinearLayout>
+
+

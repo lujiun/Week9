@@ -87,19 +87,22 @@ public class DBHelper extends SQLiteOpenHelper {
         return getReadableDatabase().rawQuery(sql,null);
     }
 
-    public Cursor selectMemosBySQL(int year, int month, int day) {
-        String sql = String.format("SELECT %s FROM %s " +
-                "WHERE %s = %s " +
-                "AND %s = %s " +
-                "AND %s = %s",
-                MemoContract.Memos.KEY_TITLE,
-                MemoContract.Memos.TABLE_NAME,
-                MemoContract.Memos.KEY_YEAR,
-                year,
-                MemoContract.Memos.KEY_MONTH,
-                month,
-                MemoContract.Memos.KEY_DAY,
-                day);
-        return getReadableDatabase().rawQuery(sql,null);
+    public Cursor selectMemosBySQL(int year, int month, String day) {
+        try{
+            String sql = String.format("SELECT %s FROM %s WHERE %s = %s AND %s = %d AND %s = %s",
+                    MemoContract.Memos.KEY_TITLE,
+                    MemoContract.Memos.TABLE_NAME,
+                    MemoContract.Memos.KEY_YEAR,
+                    year,
+                    MemoContract.Memos.KEY_MONTH,
+                    month,
+                    MemoContract.Memos.KEY_DAY,
+                    day
+            );
+            return getReadableDatabase().rawQuery(sql,null);
+        } catch(SQLException e) {
+            return null;
+        }
+
     }
 }

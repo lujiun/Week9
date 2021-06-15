@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +30,7 @@ public class MonthCalendarFragment extends Fragment {
 
     int max_day;
     int dayOfWeek;
-    TextView sel_day;
+    LinearLayout sel_day;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -87,8 +88,9 @@ public class MonthCalendarFragment extends Fragment {
             else days[i] = Integer.toString(i-dayOfWeek+1);
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+        MonthGridAdapter adapter = new MonthGridAdapter(getActivity(),
                 R.layout.day,
+                mParam1,mParam2+1,
                 days);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -100,7 +102,7 @@ public class MonthCalendarFragment extends Fragment {
                             mParam1 + "." + (mParam2 + 1) + "." + (position - dayOfWeek + 1),
                             Toast.LENGTH_SHORT).show();
                     if(sel_day!=null) sel_day.setBackgroundColor(Color.WHITE); //이전 선택값 흰색으로 돌리기
-                    sel_day = v.findViewById(R.id.day_text);
+                    sel_day = v.findViewById(R.id.day_Layout);
                     sel_day.setBackgroundColor(Color.CYAN); //선택된 텍스트 뷰 색깔 변경
 
                     ((MonthViewActivity)getActivity()).mainDate = String.format("%d년 %d월 %d일",mParam1,(mParam2 + 1),(position - dayOfWeek + 1));

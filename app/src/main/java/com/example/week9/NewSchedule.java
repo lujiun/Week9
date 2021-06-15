@@ -126,7 +126,6 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
         cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(NewSchedule.this,"나 나간다.", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -140,9 +139,7 @@ public class NewSchedule extends AppCompatActivity implements OnMapReadyCallback
         dlg.setNegativeButton("삭제", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Cursor cursor = dbHelper.getAllMemosBySQL();
                 dbHelper.deleteMemoBySQL(year, month, day);
-
                 viewAllToTextView();
             }
         });
